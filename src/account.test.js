@@ -14,10 +14,19 @@ describe(Account, () => {
   });
 
   describe("#deposit", () => {
-    it("increase the balance by the given amount", () => {
+    it("increases the balance by the given amount", () => {
       account.deposit(1500);
       expect(account.getBalance()).toBe(1500);
       expect(account.displayBalance()).toBe("Balance: £1500.00");
+    });
+  });
+
+  describe("#withdraw", () => {
+    it("decreases the balance by the given amount", () => {
+      account.deposit(2000);
+      account.withdraw(700);
+      expect(account.getBalance()).toBe(1300);
+      expect(account.displayBalance()).toBe("Balance: £1300.00");
     });
   });
 });
