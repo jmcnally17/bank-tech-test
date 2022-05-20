@@ -19,6 +19,13 @@ describe(Account, () => {
       expect(account.getBalance()).toBe(1500);
       expect(account.displayBalance()).toBe("Balance: £1500.00");
     });
+
+    it("throws an error when a number is not given", () => {
+      expect(() => {
+        account.deposit("hello");
+      }).toThrowError("Invalid input given");
+      expect(account.getBalance()).toBe(0);
+    });
   });
 
   describe("#withdraw", () => {
@@ -27,6 +34,13 @@ describe(Account, () => {
       account.withdraw(700);
       expect(account.getBalance()).toBe(1300);
       expect(account.displayBalance()).toBe("Balance: £1300.00");
+    });
+
+    it("throws an error when a number is not given", () => {
+      expect(() => {
+        account.withdraw("hello");
+      }).toThrowError("Invalid input given");
+      expect(account.getBalance()).toBe(0);
     });
   });
 });

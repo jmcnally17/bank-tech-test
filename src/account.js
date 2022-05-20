@@ -12,10 +12,12 @@ class Account {
   }
 
   deposit(amount) {
+    if (typeof amount != "number") throw "Invalid input given";
     this.balance += amount;
   }
 
   withdraw(amount) {
+    if (typeof amount != "number") throw "Invalid input given";
     this.balance -= amount;
   }
 }
