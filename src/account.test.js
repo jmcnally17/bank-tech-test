@@ -42,6 +42,13 @@ describe(Account, () => {
       }).toThrowError("Invalid input given");
       expect(account.getBalance()).toBe(0);
     });
+
+    it("throws an error when a number with too many decimals is given for the amount", () => {
+      expect(() => {
+        account.deposit(150.12345, "25/05/2022");
+      }).toThrowError("Too many decimals! Smallest division is £0.01");
+      expect(account.getBalance()).toBe(0);
+    });
   });
 
   describe("#withdraw", () => {
@@ -65,6 +72,14 @@ describe(Account, () => {
         account.withdraw("hello");
       }).toThrowError("Invalid input given");
       expect(account.getBalance()).toBe(0);
+    });
+
+    it("throws an error when a number with too many decimals is given for the amount", () => {
+      account.deposit(1000, "24/05/2022");
+      expect(() => {
+        account.withdraw(150.12345, "25/05/2022");
+      }).toThrowError("Too many decimals! Smallest division is £0.01");
+      expect(account.getBalance()).toBe(1000);
     });
   });
 });
