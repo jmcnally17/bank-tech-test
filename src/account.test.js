@@ -24,7 +24,7 @@ describe(Account, () => {
 
   describe("#deposit", () => {
     it("increases the balance by the given amount", () => {
-      account.deposit(1500);
+      account.deposit(1500, "25/05/2022");
       expect(account.getBalance()).toBe(1500);
       expect(account.displayBalance()).toBe("Balance: £1500.00");
     });
@@ -49,12 +49,19 @@ describe(Account, () => {
       }).toThrowError("Too many decimals! Smallest division is £0.01");
       expect(account.getBalance()).toBe(0);
     });
+
+    it("throws an error when an invalid date is given", () => {
+      expect(() => {
+        account.deposit(150, "35/05/2022");
+      }).toThrowError("Invalid date");
+      expect(account.getBalance()).toBe(0);
+    });
   });
 
   describe("#withdraw", () => {
     it("decreases the balance by the given amount", () => {
-      account.deposit(2000);
-      account.withdraw(700);
+      account.deposit(2000, "25/05/2022");
+      account.withdraw(700, "25/05/2022");
       expect(account.getBalance()).toBe(1300);
       expect(account.displayBalance()).toBe("Balance: £1300.00");
     });
@@ -79,6 +86,14 @@ describe(Account, () => {
       expect(() => {
         account.withdraw(150.12345, "25/05/2022");
       }).toThrowError("Too many decimals! Smallest division is £0.01");
+      expect(account.getBalance()).toBe(1000);
+    });
+
+    it("throws an error when an invalid date is given", () => {
+      account.deposit(1000, "25/05/2022");
+      expect(() => {
+        account.deposit(150, "27/14/2022");
+      }).toThrowError("Invalid date");
       expect(account.getBalance()).toBe(1000);
     });
   });
