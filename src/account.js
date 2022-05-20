@@ -14,14 +14,16 @@ class Account {
     return `Balance: £${this.balance.toFixed(2)}`;
   }
 
-  deposit(amount) {
+  deposit(amount, date) {
     if (typeof amount != "number") throw "Invalid input given";
     this.balance += amount;
+    this.log.addTransaction("deposit", amount, date, this.balance);
   }
 
-  withdraw(amount) {
+  withdraw(amount, date) {
     if (typeof amount != "number") throw "Invalid input given";
     this.balance -= amount;
+    this.log.addTransaction("withdrawal", amount, date, this.balance);
   }
 }
 

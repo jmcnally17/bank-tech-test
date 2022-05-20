@@ -29,7 +29,14 @@ describe(Account, () => {
       expect(account.displayBalance()).toBe("Balance: £1500.00");
     });
 
-    it("throws an error when a number is not given", () => {
+    it("calls the log to add this transaction", () => {
+      account.log.addTransaction.mockImplementation(() => true);
+
+      account.deposit(1500, "25/05/2022");
+      expect(account.log.addTransaction).toHaveBeenCalledTimes(1);
+    });
+
+    it("throws an error when a number is not given for the amount", () => {
       expect(() => {
         account.deposit("hello");
       }).toThrowError("Invalid input given");
@@ -45,7 +52,15 @@ describe(Account, () => {
       expect(account.displayBalance()).toBe("Balance: £1300.00");
     });
 
-    it("throws an error when a number is not given", () => {
+    it("calls the log to add this transaction", () => {
+      account.log.addTransaction.mockImplementation(() => true);
+      account.deposit(3000, "24/05/2022");
+
+      account.withdraw(1500, "25/05/2022");
+      expect(account.log.addTransaction).toHaveBeenCalledTimes(2);
+    });
+
+    it("throws an error when a number is not given for the amount", () => {
       expect(() => {
         account.withdraw("hello");
       }).toThrowError("Invalid input given");
