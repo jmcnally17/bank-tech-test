@@ -6,13 +6,13 @@ describe(TransactionLog, () => {
   });
 
   it("starts with an empty array of transactions", () => {
-    expect(log.getLog()).toEqual([]);
+    expect(log.getHistory()).toEqual([]);
   });
 
   describe("#addTransaction", () => {
     it("adds an object representing a transaction into the log", () => {
       log.addTransaction("deposit", 2000, "25/06/2022", 3500);
-      expect(log.getLog()).toEqual([
+      expect(log.getHistory()).toEqual([
         {
           type: "deposit",
           amount: 2000,

@@ -36,7 +36,7 @@ class Account {
 
   #amountCheck(amount) {
     if (typeof amount != "number") {
-      throw "Invalid input given";
+      throw "Invalid amount given";
     } else if (amount.toFixed(2) != amount) {
       throw "Too many decimals! Smallest division is £0.01";
     }

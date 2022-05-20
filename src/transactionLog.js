@@ -1,10 +1,10 @@
 class TransactionLog {
   constructor() {
-    this.log = [];
+    this.history = [];
   }
 
-  getLog() {
-    return this.log;
+  getHistory() {
+    return this.history;
   }
 
   addTransaction(type, amount, date, balance) {
@@ -14,7 +14,7 @@ class TransactionLog {
       date: date,
       balance: balance,
     };
-    this.log.push(transaction);
+    this.history.push(transaction);
   }
 }
 

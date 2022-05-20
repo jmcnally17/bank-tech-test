@@ -39,7 +39,7 @@ describe(Account, () => {
     it("throws an error when a number is not given for the amount", () => {
       expect(() => {
         account.deposit("hello");
-      }).toThrowError("Invalid input given");
+      }).toThrowError("Invalid amount given");
       expect(account.getBalance()).toBe(0);
     });
 
@@ -77,7 +77,7 @@ describe(Account, () => {
     it("throws an error when a number is not given for the amount", () => {
       expect(() => {
         account.withdraw("hello");
-      }).toThrowError("Invalid input given");
+      }).toThrowError("Invalid amount given");
       expect(account.getBalance()).toBe(0);
     });
 
