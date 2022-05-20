@@ -1,6 +1,9 @@
+const TransactionLog = require("./transactionLog");
+
 class Account {
-  constructor() {
+  constructor(log = new TransactionLog()) {
     this.balance = 0;
+    this.log = log;
   }
 
   getBalance() {

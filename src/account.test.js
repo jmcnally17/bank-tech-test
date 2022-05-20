@@ -1,12 +1,21 @@
 const Account = require("./account");
+const TransactionLog = require("./transactionLog");
+
+jest.mock("./transactionLog");
 
 describe(Account, () => {
   beforeEach(() => {
-    account = new Account();
+    TransactionLog.mockClear();
+    mockLog = new TransactionLog();
+    account = new Account(mockLog);
   });
 
   it("starts with a balance of 0", () => {
     expect(account.getBalance()).toBe(0);
+  });
+
+  it("has a transaction log", () => {
+    expect(account.log).toEqual(mockLog);
   });
 
   it("can display the balance in the correct format", () => {
