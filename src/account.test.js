@@ -92,7 +92,7 @@ describe(Account, () => {
     it("throws an error when an invalid date is given", () => {
       account.deposit(1000, "25/05/2022");
       expect(() => {
-        account.deposit(150, "27/14/2022");
+        account.withdraw(150, "27/14/2022");
       }).toThrowError("Invalid date");
       expect(account.getBalance()).toBe(1000);
     });

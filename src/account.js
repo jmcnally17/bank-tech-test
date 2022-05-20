@@ -45,7 +45,7 @@ class Account {
     const month = date.substring(3, 5);
     const day = date.substring(0, 2);
     const formatDate = `${year}/${month}/${day}`;
-    return (new Date(formatDate)).getTime()
+    return new Date(formatDate).getTime();
   }
 }
 
