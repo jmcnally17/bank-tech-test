@@ -96,5 +96,12 @@ describe(Account, () => {
       }).toThrowError("Invalid date");
       expect(account.getBalance()).toBe(1000);
     });
+
+    it("throws an error if the user tries to withdraw an amount greater than the balance", () => {
+      expect(() => {
+        account.withdraw(5, "25/05/2022");
+      }).toThrowError("Insufficient balance");
+      expect(account.getBalance()).toBe(0);
+    });
   });
 });

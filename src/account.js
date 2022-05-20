@@ -33,6 +33,8 @@ class Account {
       throw "Too many decimals! Smallest division is £0.01";
     } else if (!this.#dateCheck(date)) {
       throw "Invalid date";
+    } else if (amount > this.balance) {
+      throw "Insufficient balance";
     }
     this.balance -= amount;
     this.log.addTransaction("withdrawal", amount, date, this.balance);
