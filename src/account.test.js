@@ -73,6 +73,13 @@ describe(Account, () => {
       }).toThrowError("Invalid date");
       expect(account.getBalance()).toBe(0);
     });
+
+    it("throws an error when an invalid date format is given", () => {
+      expect(() => {
+        account.deposit(1000, "25-05-2022");
+      }).toThrowError("Invalid date format: must be given as DD/MM/YYYY");
+      expect(account.getBalance()).toBe(0);
+    });
   });
 
   describe("#withdraw", () => {
@@ -122,6 +129,14 @@ describe(Account, () => {
       expect(() => {
         account.withdraw(150, "27/14/2022");
       }).toThrowError("Invalid date");
+      expect(account.getBalance()).toBe(1000);
+    });
+
+    it("throws an error when an invalid date format is given", () => {
+      account.deposit(1000, "25/05/2022");
+      expect(() => {
+        account.withdraw(150, "26-05-2022");
+      }).toThrowError("Invalid date format: must be given as DD/MM/YYYY");
       expect(account.getBalance()).toBe(1000);
     });
 

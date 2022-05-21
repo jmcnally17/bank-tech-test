@@ -63,7 +63,9 @@ class Account {
     const month = date.substring(3, 5);
     const day = date.substring(0, 2);
     const formatDate = `${year}/${month}/${day}`;
-    if (!new Date(formatDate).getTime()) {
+    if (date.charAt(2) != "/" || date.charAt(5) != "/") {
+      throw "Invalid date format: must be given as DD/MM/YYYY";
+    } else if (!new Date(formatDate).getTime()) {
       throw "Invalid date";
     }
   }
