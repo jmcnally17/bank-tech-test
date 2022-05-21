@@ -46,7 +46,17 @@ describe(Account, () => {
     it("throws an error when a number is not given for the amount", () => {
       expect(() => {
         account.deposit("hello", "25/05/2022");
-      }).toThrowError("Invalid amount given");
+      }).toThrowError("Amount must be a number");
+      expect(account.getBalance()).toBe(0);
+    });
+
+    it("throws an error when 0 or a negative number is given for the amount", () => {
+      expect(() => {
+        account.deposit(0, "26/05/2022");
+      }).toThrowError("Amount cannot be 0 or negative");
+      expect(() => {
+        account.deposit(-1000, "25/05/2022");
+      }).toThrowError("Amount cannot be 0 or negative");
       expect(account.getBalance()).toBe(0);
     });
 
@@ -84,8 +94,19 @@ describe(Account, () => {
     it("throws an error when a number is not given for the amount", () => {
       expect(() => {
         account.withdraw("hello", "25/05/2022");
-      }).toThrowError("Invalid amount given");
+      }).toThrowError("Amount must be a number");
       expect(account.getBalance()).toBe(0);
+    });
+
+    it("throws an error when 0 or a negative number is given for the amount", () => {
+      account.deposit(1000, "25/05/2022");
+      expect(() => {
+        account.withdraw(0, "26/05/2022");
+      }).toThrowError("Amount cannot be 0 or negative");
+      expect(() => {
+        account.withdraw(-1000, "26/05/2022");
+      }).toThrowError("Amount cannot be 0 or negative");
+      expect(account.getBalance()).toBe(1000);
     });
 
     it("throws an error when a number with too many decimals is given for the amount", () => {

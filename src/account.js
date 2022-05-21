@@ -44,7 +44,9 @@ class Account {
 
   #amountCheck(amount) {
     if (typeof amount != "number") {
-      throw "Invalid amount given";
+      throw "Amount must be a number";
+    } else if (amount <= 0) {
+      throw "Amount cannot be 0 or negative";
     } else if (amount.toFixed(2) != amount) {
       throw "Too many decimals! Smallest division is £0.01";
     }
