@@ -6,6 +6,7 @@ class Account {
     this.balance = 0;
     this.log = log;
     this.statement = statement;
+    console.log("Thank you for opening an account.");
   }
 
   getBalance() {
@@ -21,6 +22,10 @@ class Account {
     this.balance += amount;
     this.balance = parseFloat(this.balance.toFixed(2));
     this.log.addTransaction("deposit", amount, date, this.balance);
+    console.log(
+      `You have deposited £${amount.toFixed(2)}` +
+        `\nNew balance: £${this.balance.toFixed(2)}`
+    );
   }
 
   withdraw(amount, date) {
@@ -29,6 +34,10 @@ class Account {
     this.balance -= amount;
     this.balance = parseFloat(this.balance.toFixed(2));
     this.log.addTransaction("withdrawal", amount, date, this.balance);
+    console.log(
+      `You have withdrawn £${amount.toFixed(2)}` +
+        `\nNew balance: £${this.balance.toFixed(2)}`
+    );
   }
 
   printStatement() {
