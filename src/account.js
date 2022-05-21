@@ -1,9 +1,11 @@
 const TransactionLog = require("./transactionLog");
+const Statement = require("./statement");
 
 class Account {
-  constructor(log = new TransactionLog()) {
+  constructor(log = new TransactionLog(), statement = new Statement()) {
     this.balance = 0;
     this.log = log;
+    this.statement = statement;
   }
 
   getBalance() {
@@ -25,6 +27,10 @@ class Account {
     this.#balanceCheck(amount);
     this.balance -= amount;
     this.log.addTransaction("withdrawal", amount, date, this.balance);
+  }
+
+  printStatement() {
+    return this.statement.formatLog(this.log);
   }
 
   // private methods
