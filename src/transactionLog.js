@@ -14,7 +14,7 @@ class TransactionLog {
       date: date,
       balance: balance,
     };
-    this.history.push(transaction);
+    this.history.unshift(transaction);
   }
 }
 
