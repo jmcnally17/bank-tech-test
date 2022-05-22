@@ -1,6 +1,6 @@
 # Bank Tech Test
 
-This is a tech test for the Makers main course which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement.
+This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement.
 
 Miro planning board [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
 
@@ -8,7 +8,7 @@ Miro planning board [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_i
 
 ## How To Use
 
-While in the main directory, change to the [src](https://github.com/jmcnally17/bank-tech-test/tree/main/src) directory using `cd src` and then run the [account.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js) file in Node.js REPL:
+While in the [main](https://github.com/jmcnally17/bank-tech-test) directory, change to the [src](https://github.com/jmcnally17/bank-tech-test/tree/main/src) directory using `cd src` and then run the [account.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js) file in Node.js REPL:
 
 ```
 node
@@ -38,13 +38,20 @@ The deposit and withdraw functions increase and decrease the balance of the acco
 
 If any of these conditions are not met, then the program will throw an appropriate error, giving the user some insight into what was wrong with their input.
 
-At any point, the accounts statement can be printed to the console using:
+At any point, the accounts balance and statement can be printed to the console using:
 
 ```
+account.displayBalance();
 account.printStatement();
 ```
 
-This will display every transaction from most recent to oldest in the format:
+This will display the balance in a simple readable print:
+
+```
+Balance: £2500.00
+```
+
+The statement will show every transaction from most recent to oldest in the format:
 
 ```
 date || credit || debit || balance

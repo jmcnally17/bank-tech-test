@@ -14,7 +14,7 @@ class Account {
   }
 
   displayBalance() {
-    return `Balance: £${this.balance.toFixed(2)}`;
+    console.log(`Balance: £${this.balance.toFixed(2)}`);
   }
 
   deposit(amount, date) {
