@@ -6,6 +6,36 @@ Miro planning board [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_i
 
 ## Getting Started
 
+This program is run using Node.js, which is installed using NVM - Node Version Manager. So, if you haven't already, install NVM using:
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+```
+
+Now, your ~/.zshrc file will need reloading:
+
+```
+source ~/.zshrc
+```
+
+Next, you can install and start using node by running:
+
+```
+nvm install node
+nvm use node
+```
+
+`nvm use node` will use the latest stable version. Once that is set up, you can now clone this repository and then install the necessary dependencies using:
+
+```
+git clone https://github.com/jmcnally17/bank-tech-test.git
+npm install
+```
+
+`npm install` must be run while in the main directory.
+
+Now you are all set up. Move onto the following section to learn how to use this program.
+
 ## How To Use
 
 While in the [main](https://github.com/jmcnally17/bank-tech-test) directory, change to the [src](https://github.com/jmcnally17/bank-tech-test/tree/main/src) directory using `cd src` and then run the [account.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js) file in Node.js REPL:
