@@ -111,4 +111,6 @@ Jest was used to create the test suite for each class. To run the tests, simply 
 
 ![Code coverage from Jest](images/code_coverage.png "Code coverage from Jest")
 
+*Note: The test coverage doesn't fully cover the branching. This is due to how the constructor works when injecting other classes into the account class.*
+
 Tests were alway written first using the Red-Green-Refactor technique from TDD, with the simplest implementation to solve the tests being written first. Any code that needed to be changed was done so after its test had been updated first. This is so even when modifications are made to existing code, the Red-Green-Refactor technique is still followed.
