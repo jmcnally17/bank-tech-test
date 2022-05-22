@@ -1,8 +1,15 @@
 # Bank Tech Test
 
-This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement.
+This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement. This program has been made while adhering to the following principles:
+  * OOP (Object Oriented Programming)
+  * TDD (Test Driven Development)
+  * Single Responsibility Principle
+  * DRY (Don't Repeat Yourself) code
 
-Miro planning board [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
+Technologies used:
+  * [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
+  * [Jest](https://jestjs.io/) for unit testing.
+  * The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for linting.
 
 ## Getting Started
 
