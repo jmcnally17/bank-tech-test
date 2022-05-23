@@ -13,39 +13,49 @@ Technologies used:
 
 ## Approach
 
-I started off by creating a Miro board to map out my idea of how the program would work and what classes I would be creating. I initially created my user stories that I thought covered the functionality I wanted to implement. I then started with the Account class that contained a balance instance variable in the constructor and five functions that would fulfill these user stories:
-  * getBalance()
-  * displayBalance()
-  * deposit(amount, date)
-  * withdraw(amount, date)
-  * printStatement()
+I started off by creating a Miro board to map out my idea of how the program would work and what classes I would be creating. I initially created my user stories that I thought covered the functionality I wanted to implement. I then started with the `Account` class that contained a balance instance variable in the constructor called `this.balance` and five functions that would fulfill these user stories:
+  * `getBalance()`
+  * `displayBalance()`
+  * `deposit(amount, date)`
+  * `withdraw(amount, date)`
+  * `printStatement()`
 
-*Note: Although getBalance technically already deals with showing the balance of the account, I created displayBalance to print a more user-friendly message to the console.*
+*Note: Although `getBalance` already deals with showing the balance of the account, I created `displayBalance` to print a more user-friendly message to the console.*
 
-I then started to think about how each function would work and what each would need in order to carry out their responsibility. getBalance and displayBalance were very straightforward since all they required was just the balance instance variable. Initially, deposit and withdraw would simply increase and decrease the balance respectively; however, I quickly realised printStatement would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that deposit and withdraw would need to add the current transaction to this log once they update the balance.
+I then started to think about how each function would work and what each would need in order to carry out their responsibility. `getBalance` and `displayBalance` were very straightforward since all they required was just `this.balance`. Initially, `deposit` and `withdraw` would simply increase and decrease the balance respectively; however, I quickly realised `printStatement` would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that `deposit` and `withdraw` would need to add the current transaction to this log once they update the balance.
 
-At this point I could see the Account class had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
+At this point I could see `Account` had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
   * Monitoring the balance
   * Keeping a history of all previous transactions
   * Creating a statement from the transaction log
 
-It was clear two more classes were needed in order to adhere to the SRP: TransactionLog and Statement. I then followed the same process for these two classes as I had for the account class.
+It was clear two more classes were needed in order to adhere to the SRP: `TransactionLog` and `Statement`. I then followed the same process for these two classes as I had for the account class.
 
 Each transaction would need four keys:
-  * type - which column to put the amount under
-  * amount - the change in the balance the transaction would make
-  * date - when the transaction was made
-  * balance - the updated balance once the transaction is completed
+  * `type` - indicates which column in the statement to put the amount under
+  * `amount` - the change in the balance the transaction would make
+  * `date` - when the transaction was made
+  * `balance` - the updated balance once the transaction is completed
 
-These were made into a Javascript object by the transaction log and then added into the history instance variable. The Statement class would need to have one function using the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement.
+These would be made into a Javascript object by `TransactionLog` and then added into the history instance variable called `this.history` by a function called `addTransaction`. `Statement` would need to have one function called `formatLog` which would use the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement. `addTransaction` would use the `unshift` method to place the new transaction at the beginning of the array so that when iterating through `this.history`, the most recent transactions would be placed at the top of the statement.
 
-I then had to plan how I would connect these classes together. I decided to use dependency injection to create an instance of the TransactionLog and Statement classes in the constructor of the Account class because one account would have one corresponding transation history and statement.
+I then had to plan how I would connect these classes together. I decided to use dependency injection to create an instance of `TransactionLog` and `Statement` in the constructor of `Account` because one account would have one corresponding transation history and statement.
 
-Next, I tackled edge cases which all turned out to be solved by simply throwing errors when certain conditions are met with the user's input (e.g. invalid dates being entered).
+Next, I planned for edge cases which all turned out to be solved by simply throwing errors when certain conditions are met with the user's input (e.g. invalid dates being entered).
 
 Finally, to finish planning I drew up an example of what output I wanted to see when running the code in Node.js REPL. This was a good way of remembering what output messages I wanted my functions to give.
 
-At this point, I thought I had sufficiently planned and begun to write code, with tests being run first to adhere to TDD. 
+At this point, I thought I had sufficiently planned and began to write code, with tests being run first to adhere to TDD.
+
+### Development
+
+All the main functions that are intended to be called by the user were put in `Account`. The functions from the other classes are called in `Account` when needed. This made sense to me due to the fact the account is what the user would be interacting with.
+
+`deposit` and `withdraw` were the only functions which had to account for edge cases. I focused on coding the main functionality before dealing with edge cases. I made conditionals for each way the user could enter invalid input for the amount and date of the transactions, one at a time. Once I felt I had covered all bases, I went about refactoring these functions by using a private method for checking errors. This method would then branch into further private methods to account for each type of error that could occur. This branching was made to make each function short and readable to the point where it is clear to see the responsibility of each one.
+
+I encountered an interesting bug when creating these functions. I was testing my code in `node` by making multiple deposits and withdrawals with amounts with two decimal places and found that `this.balance` appeared to become a float with more than two decimal places. I researched this and found that this is due to the way Javascript estimates floats. This bug was solved by lines [23](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) and [35](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) which set `this.balance` back to a two decimal place float before creating the transaction.
+
+The only other refactoring of functions needed was in `formatLog` in `Statement` which would use a private method that would branch similar to `deposit` and `withdraw`. Each branch would cover for each type of transaction.
 
 ## Getting Started
 
@@ -81,14 +91,14 @@ Now you are all set up. Move onto the following section to learn how to use this
 
 ## How To Use
 
-While in the [main](https://github.com/jmcnally17/bank-tech-test) directory, change to the [src](https://github.com/jmcnally17/bank-tech-test/tree/main/src) directory using `cd src` and then run the [account.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js) file in Node.js REPL:
+While in the [main](https://github.com/jmcnally17/bank-tech-test) directory, change to the [src](https://github.com/jmcnally17/bank-tech-test/tree/main/src) folder using `cd src` and then run [account.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js) in Node.js REPL:
 
 ```
 node
 .load account.js
 ```
 
-The terminal being in the src directory is necessary so that the require statements in account.js for both the [TransactionLog](https://github.com/jmcnally17/bank-tech-test/blob/main/src/transactionLog.js) and [Statement](https://github.com/jmcnally17/bank-tech-test/blob/main/src/statement.js) classes work correctly.
+The terminal being in the src directory is necessary so that the require statements in account.js for both [transactionLog.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/transactionLog.js) and [statement.js](https://github.com/jmcnally17/bank-tech-test/blob/main/src/statement.js) work correctly.
 
 Once the file has loaded, a new account can be created and updated with the following commands:
 
@@ -98,7 +108,7 @@ account.deposit(amount, date);
 account.withdraw(amount, date);
 ```
 
-The deposit and withdraw functions increase and decrease the balance of the account respectively and are added into the history of the transaction log. These functions both have the following requirements for their arguments passed:
+`deposit` and `withdraw` increase and decrease the balance of the account respectively and call `addTransaction` from `TransactionLog` to add the transaction to `this.history`. These functions both have the following requirements for their arguments passed:
 
 * amount:
   * must be a number
@@ -150,3 +160,5 @@ Jest was used to create the test suite for each class. To run the tests, simply 
 *Note: The test coverage doesn't fully cover the branching. This is due to how the constructor works when injecting other classes into the account class.*
 
 Tests were alway written first using the Red-Green-Refactor technique from TDD, with the simplest implementation to solve the tests being written first. Any code that needed to be changed was done so after its test had been updated first. This is so even when modifications are made to existing code, the Red-Green-Refactor technique is still followed.
+
+Jest automatic mocks were also used where appropriate in order to isolate classes when testing.
