@@ -44,28 +44,30 @@ describe(Account, () => {
       expect(mockLog.addTransaction).toHaveBeenCalledTimes(1);
     });
 
-    it("throws an error when a number is not given for the amount", () => {
-      expect(() => {
-        account.deposit("hello", "25/05/2022");
-      }).toThrowError("Amount must be a number");
-      expect(account.getBalance()).toBe(0);
-    });
+    describe("throws an error when", () => {
+      it("a number is not given for the amount", () => {
+        expect(() => {
+          account.deposit("hello", "25/05/2022");
+        }).toThrowError("Amount must be a number");
+        expect(account.getBalance()).toBe(0);
+      });
 
-    it("throws an error when 0 or a negative number is given for the amount", () => {
-      expect(() => {
-        account.deposit(0, "26/05/2022");
-      }).toThrowError("Amount cannot be 0 or negative");
-      expect(() => {
-        account.deposit(-1000, "25/05/2022");
-      }).toThrowError("Amount cannot be 0 or negative");
-      expect(account.getBalance()).toBe(0);
-    });
+      it("0 or a negative number is given for the amount", () => {
+        expect(() => {
+          account.deposit(0, "26/05/2022");
+        }).toThrowError("Amount cannot be 0 or negative");
+        expect(() => {
+          account.deposit(-1000, "25/05/2022");
+        }).toThrowError("Amount cannot be 0 or negative");
+        expect(account.getBalance()).toBe(0);
+      });
 
-    it("throws an error when a number with too many decimals is given for the amount", () => {
-      expect(() => {
-        account.deposit(150.12345, "25/05/2022");
-      }).toThrowError("Too many decimals! Smallest division is £0.01");
-      expect(account.getBalance()).toBe(0);
+      it("a number with too many decimals is given for the amount", () => {
+        expect(() => {
+          account.deposit(150.12345, "25/05/2022");
+        }).toThrowError("Too many decimals! Smallest division is £0.01");
+        expect(account.getBalance()).toBe(0);
+      });
     });
   });
 
@@ -84,37 +86,39 @@ describe(Account, () => {
       expect(mockLog.addTransaction).toHaveBeenCalledTimes(2);
     });
 
-    it("throws an error when a number is not given for the amount", () => {
-      expect(() => {
-        account.withdraw("hello", "25/05/2022");
-      }).toThrowError("Amount must be a number");
-      expect(account.getBalance()).toBe(0);
-    });
+    describe("throws an error when", () => {
+      it("a number is not given for the amount", () => {
+        expect(() => {
+          account.withdraw("hello", "25/05/2022");
+        }).toThrowError("Amount must be a number");
+        expect(account.getBalance()).toBe(0);
+      });
 
-    it("throws an error when 0 or a negative number is given for the amount", () => {
-      account.deposit(1000, "25/05/2022");
-      expect(() => {
-        account.withdraw(0, "26/05/2022");
-      }).toThrowError("Amount cannot be 0 or negative");
-      expect(() => {
-        account.withdraw(-1000, "26/05/2022");
-      }).toThrowError("Amount cannot be 0 or negative");
-      expect(account.getBalance()).toBe(1000);
-    });
+      it("0 or a negative number is given for the amount", () => {
+        account.deposit(1000, "25/05/2022");
+        expect(() => {
+          account.withdraw(0, "26/05/2022");
+        }).toThrowError("Amount cannot be 0 or negative");
+        expect(() => {
+          account.withdraw(-1000, "26/05/2022");
+        }).toThrowError("Amount cannot be 0 or negative");
+        expect(account.getBalance()).toBe(1000);
+      });
 
-    it("throws an error when a number with too many decimals is given for the amount", () => {
-      account.deposit(1000, "24/05/2022");
-      expect(() => {
-        account.withdraw(150.12345, "25/05/2022");
-      }).toThrowError("Too many decimals! Smallest division is £0.01");
-      expect(account.getBalance()).toBe(1000);
-    });
+      it("a number with too many decimals is given for the amount", () => {
+        account.deposit(1000, "24/05/2022");
+        expect(() => {
+          account.withdraw(150.12345, "25/05/2022");
+        }).toThrowError("Too many decimals! Smallest division is £0.01");
+        expect(account.getBalance()).toBe(1000);
+      });
 
-    it("throws an error if the user tries to withdraw an amount greater than the balance", () => {
-      expect(() => {
-        account.withdraw(5, "25/05/2022");
-      }).toThrowError("Insufficient balance");
-      expect(account.getBalance()).toBe(0);
+      it("the user tries to withdraw an amount greater than the balance", () => {
+        expect(() => {
+          account.withdraw(5, "25/05/2022");
+        }).toThrowError("Insufficient balance");
+        expect(account.getBalance()).toBe(0);
+      });
     });
   });
 
