@@ -1,10 +1,10 @@
 # Bank Tech Test
 
 This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement. This program has been made while adhering to the following principles:
-  * Object Oriented Programming (OOP)
-  * Test Driven Development (TDD)
-  * Single Responsibility Principle (SRP)
-  * Don't Repeat Yourself (DRY) code
+  * [Object Oriented Programming](https://en.wikipedia.org/wiki/Object-oriented_programming) (OOP)
+  * [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) (TDD)
+  * [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle) (SRP)
+  * [Don't Repeat Yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (DRY) code
 
 Technologies used:
   * [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
