@@ -21,5 +21,21 @@ describe(TransactionLog, () => {
         },
       ]);
     });
+
+    describe("throws an error", () => {
+      it("for an invalid date", () => {
+        expect(() => {
+          log.addTransaction("deposit", 150, "35/05/2022", 150);
+        }).toThrowError("Invalid date");
+        expect(log.getHistory()).toEqual([]);
+      });
+
+      it("when an invalid date format is given", () => {
+        expect(() => {
+          log.addTransaction("deposit", 1000, "25-05-2022", 1000);
+        }).toThrowError("Invalid date format: must be given as DD/MM/YYYY");
+        expect(log.getHistory()).toEqual([]);
+      });
+    });
   });
 });
