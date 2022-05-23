@@ -1,15 +1,51 @@
 # Bank Tech Test
 
 This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement. This program has been made while adhering to the following principles:
-  * OOP (Object Oriented Programming)
-  * TDD (Test Driven Development)
-  * Single Responsibility Principle
-  * DRY (Don't Repeat Yourself) code
+  * Object Oriented Programming (OOP)
+  * Test Driven Development (TDD)
+  * Single Responsibility Principle (SRP)
+  * Don't Repeat Yourself (DRY) code
 
 Technologies used:
   * [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
   * [Jest](https://jestjs.io/) for unit testing.
   * The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for linting.
+
+## Approach
+
+I started off by creating a Miro board to map out my idea of how the program would work and what classes I would be creating. I initially created my user stories that I thought covered the functionality I wanted to implement. I then started with the Account class that contained a balance instance variable in the constructor and five functions that would fulfill these user stories:
+  * getBalance()
+  * displayBalance()
+  * deposit(amount, date)
+  * withdraw(amount, date)
+  * printStatement()
+
+*Note: Although getBalance technically already deals with showing the balance of the account, I created displayBalance to print a more user-friendly message to the console.*
+
+I then started to think about how each function would work and what each would need in order to carry out their responsibility. getBalance and displayBalance were very straightforward since all they required was just the balance instance variable. Initially, deposit and withdraw would simply increase and decrease the balance respectively; however, I quickly realised printStatement would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that deposit and withdraw would need to add the current transaction to this log once they update the balance.
+
+At this point I could see the Account class had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
+  * Monitoring the balance
+  * Keeping a history of all previous transactions
+  * Creating a statement from the transaction log
+
+It was clear two more classes were needed in order to adhere to the SRP: TransactionLog and Statement. I then followed the same process for these two classes as I had for the account class.
+
+Each transaction would need four keys:
+  * type - which column to put the amount under
+  * amount - the change in the balance the transaction would make
+  * date - when the transaction was made
+  * balance - the updated balance once the transaction is completed
+
+These were made into a Javascript object by the transaction log and then added into the history instance variable. The Statement class would need to have one function using the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement.
+
+I then had to plan how I would connect these classes together. I decided to use dependency injection to create an instance of the TransactionLog and Statement classes in the constructor of the Account class because one account would have one corresponding transation history and statement.
+
+Next, I tackled edge cases which all turned out to be solved by simply throwing errors when certain conditions are met with the user's input (e.g. invalid dates being entered).
+
+Finally, to finish planning I drew up an example of what output I wanted to see when running the code in Node.js REPL. This was a good way of remembering what output messages I wanted my functions to give.
+
+At this point, I thought I had sufficiently planned and begun to write code, with tests being run first to adhere to TDD. 
 
 ## Getting Started
 
