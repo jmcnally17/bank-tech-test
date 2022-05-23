@@ -110,12 +110,12 @@ account.withdraw(amount, date);
 
 `deposit` and `withdraw` increase and decrease the balance of the account respectively and call `addTransaction` from `TransactionLog` to add the transaction to `this.history`. These functions both have the following requirements for their arguments passed:
 
-* amount:
+* `amount`:
   * must be a number
   * cannot be less than or equal to 0
   * cannot have more than two decimal places (since it is in units of pounds)
   * cannot be greater than the balance (this only applies to withdraw)
-* date:
+* `date`:
   * must be in a valid format (DD/MM/YYYY)
   * must be a valid date
 
