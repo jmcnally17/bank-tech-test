@@ -155,7 +155,7 @@ The user is able to enter dates they want in any order. This could therefore cre
 
 Jest was used to create the test suite for each class and the [feature test](https://github.com/jmcnally17/bank-tech-test/blob/main/src/feature.test.js). To run the tests, simply enter `jest` into the terminal while in either the main or src directory. If you want to see the code coverage stats as well, then running `jest --coverage` will show them. Each test passes and cumulatively provide a 100% code coverage. The output from this is shown here:
 
-![Code coverage from Jest](images/code_coverage.png "Code coverage from Jest")
+
 
 Tests were alway written first using the Red-Green-Refactor technique from TDD, with the simplest implementation to solve the tests being written first. Any code that needed to be changed was done so after its test had been updated first. This is so even when modifications are made to existing code, the Red-Green-Refactor technique is still followed.
 
