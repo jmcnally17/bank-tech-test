@@ -17,10 +17,7 @@
     "url": "https://github.com/jmcnally17/bank-tech-test/issues"
   },
   "homepage": "https://github.com/jmcnally17/bank-tech-test#readme",
-  "dependencies": {
-    "jest": "^28.1.0"
-  },
   "devDependencies": {
-    "prettier": "2.6.2"
+    "jest": "^28.1.1"
   }
 }
