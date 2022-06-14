@@ -1,6 +1,6 @@
 # Bank Tech Test
 
-This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement. This program has been made while adhering to the following principles:
+This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement. This program has been made while adhering to the following criteria:
 
 - [Object Oriented Programming](https://en.wikipedia.org/wiki/Object-oriented_programming) (OOP)
 - [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) (TDD)
@@ -13,55 +13,6 @@ Technologies used:
 - [Jest](https://jestjs.io/) for unit testing
 - The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting README.md
 - [ESLint](https://eslint.org/) for linting
-
-## Approach
-
-I started off by creating a Miro board to map out my idea of how the program would work and what classes I would be creating. I initially created my user stories that I thought covered the functionality I wanted to implement. I then started with the `Account` class that contained a balance instance variable in the constructor called `this.balance` and five functions that would fulfill these user stories:
-
-- `getBalance()`
-- `displayBalance()`
-- `deposit(amount, date)`
-- `withdraw(amount, date)`
-- `printStatement()`
-
-_Note: Although `getBalance` already deals with showing the balance of the account, I created `displayBalance` to print a more user-friendly message to the console._
-
-I then started to think about how each function would work and what each would need in order to carry out their responsibility. `getBalance` and `displayBalance` were very straightforward since all they required was just `this.balance`. Initially, `deposit` and `withdraw` would simply increase and decrease the balance respectively; however, I quickly realised `printStatement` would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that `deposit` and `withdraw` would need to add the current transaction to this log once they update the balance.
-
-At this point I could see `Account` had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
-
-- Monitoring the balance
-- Keeping a history of all previous transactions
-- Creating a statement from the transaction log
-
-It was clear two more classes were needed in order to adhere to the SRP: `TransactionLog` and `Statement`. I then followed the same process for these two classes as I had for the account class.
-
-Each transaction would need four keys:
-
-- `type` - indicates which column in the statement to put the amount under
-- `amount` - the change in the balance the transaction would make
-- `date` - when the transaction was made
-- `balance` - the updated balance once the transaction is completed
-
-These would be made into a Javascript object by `TransactionLog` and then added into the history instance variable called `this.history` by a function called `addTransaction`. `Statement` would need to have one function called `formatLog` which would use the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement. `addTransaction` would use the `unshift` method to place the new transaction at the beginning of the array so that when iterating through `this.history`, the most recent transactions would be placed at the top of the statement.
-
-I then had to plan how I would connect these classes together. I decided to use dependency injection to create an instance of `TransactionLog` and `Statement` in the constructor of `Account` because one account would have one corresponding transaction history and statement.
-
-Next, I planned for edge cases which all turned out to be solved by simply throwing errors when certain conditions are met with the user's input (e.g. invalid dates being entered).
-
-Finally, to finish planning I drew up an example of what output I wanted to see when running the code in Node.js REPL. This was a good way of remembering what output messages I wanted my functions to give.
-
-At this point, I thought I had sufficiently planned and began to write code, with tests being run first to adhere to TDD.
-
-### Development
-
-All the main functions that are intended to be called by the user were put in `Account`. The functions from the other classes are called in `Account` when needed. This made sense to me due to the fact the account is what the user would be interacting with.
-
-I focused on coding the main functionality before dealing with edge cases. I made conditionals for each way the user could enter invalid input for the amount and date of the transactions, one at a time. `deposit` and `withdraw` accounted for edge cases regarding the amount, because it is `Account`s responsibility to monitor the balance. `addTransaction` accounted for edge cases regarding the date, because `TransactionLog` keeps a record of all previous transactions so I felt it would be appropriate for this class to also check if a valid date has been given. Once I felt I had covered all bases, I went about refactoring these functions by using private methods for checking errors. These methods would then branch into further private methods to account for each type of error that could occur. This branching was made to make each function short and readable to the point where it is clear to see the responsibility of each one.
-
-I encountered an interesting bug when creating these private functions. I was testing my code in `node` by making multiple deposits and withdrawals with amounts with two decimal places and found that `this.balance` appeared to become a float with more than two decimal places. I researched this and found that this is due to the way Javascript estimates floats. This bug was solved by lines [23](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) and [35](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) which set `this.balance` back to a two decimal place float before creating the transaction.
-
-The only other refactoring of functions needed was in `formatLog` in `Statement` which would use a private method that would branch in a similar way as used before. Each branch would cover for each type of transaction.
 
 ## Getting Started
 
@@ -159,10 +110,59 @@ The user is able to enter dates they want in any order. This could therefore cre
 
 ## Testing
 
-Jest was used to create the test suite for each class and the [feature test](https://github.com/jmcnally17/bank-tech-test/blob/main/src/feature.test.js). To run the tests, simply enter `jest` into the terminal while in either the main or src directory. If you want to see the code coverage stats as well, then running `jest --coverage` will show them. Each test passes and cumulatively provide a 100% code coverage. The output from this is shown here:
+Jest was used to create the test suite for each class and the [feature test](https://github.com/jmcnally17/bank-tech-test/blob/main/src/feature.test.js). To run the tests, simply enter `npm run test` into the terminal while in either the main or src directory. If you want to see the code coverage stats as well, then running `npm run test:coverage` will show them. Each test passes and cumulatively provide a 100% code coverage. The output from this is shown here:
 
 ![Code coverage from Jest](images/code_coverage.png "Code coverage from Jest")
 
 Tests were alway written first using the Red-Green-Refactor technique from TDD, with the simplest implementation to solve the tests being written first. Any code that needed to be changed was done so after its test had been updated first. This is so even when modifications are made to existing code, the Red-Green-Refactor technique is still followed.
 
 Jest automatic mocks were also used where appropriate in order to isolate classes when testing.
+
+## Approach
+
+I started off by creating a Miro board to map out my idea of how the program would work and what classes I would be creating. I initially created my user stories that I thought covered the functionality I wanted to implement. I then started with the `Account` class that contained a balance instance variable in the constructor called `this.balance` and five functions that would fulfill these user stories:
+
+- `getBalance()`
+- `displayBalance()`
+- `deposit(amount, date)`
+- `withdraw(amount, date)`
+- `printStatement()`
+
+_Note: Although `getBalance` already deals with showing the balance of the account, I created `displayBalance` to print a more user-friendly message to the console._
+
+I then started to think about how each function would work and what each would need in order to carry out their responsibility. `getBalance` and `displayBalance` were very straightforward since all they required was just `this.balance`. Initially, `deposit` and `withdraw` would simply increase and decrease the balance respectively; however, I quickly realised `printStatement` would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that `deposit` and `withdraw` would need to add the current transaction to this log once they update the balance.
+
+At this point I could see `Account` had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
+
+- Monitoring the balance
+- Keeping a history of all previous transactions
+- Creating a statement from the transaction log
+
+It was clear two more classes were needed in order to adhere to the SRP: `TransactionLog` and `Statement`. I then followed the same process for these two classes as I had for the account class.
+
+Each transaction would need four keys:
+
+- `type` - indicates which column in the statement to put the amount under
+- `amount` - the change in the balance the transaction would make
+- `date` - when the transaction was made
+- `balance` - the updated balance once the transaction is completed
+
+These would be made into a Javascript object by `TransactionLog` and then added into the history instance variable called `this.history` by a function called `addTransaction`. `Statement` would need to have one function called `formatLog` which would use the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement. `addTransaction` would use the `unshift` method to place the new transaction at the beginning of the array so that when iterating through `this.history`, the most recent transactions would be placed at the top of the statement.
+
+I then had to plan how I would connect these classes together. I decided to use dependency injection to create an instance of `TransactionLog` and `Statement` in the constructor of `Account` because one account would have one corresponding transaction history and statement.
+
+Next, I planned for edge cases which all turned out to be solved by simply throwing errors when certain conditions are met with the user's input (e.g. invalid dates being entered).
+
+Finally, to finish planning I drew up an example of what output I wanted to see when running the code in Node.js REPL. This was a good way of remembering what output messages I wanted my functions to give.
+
+At this point, I thought I had sufficiently planned and began to write code, with tests being run first to adhere to TDD.
+
+### Development
+
+All the main functions that are intended to be called by the user were put in `Account`. The functions from the other classes are called in `Account` when needed. This made sense to me due to the fact the account is what the user would be interacting with.
+
+I focused on coding the main functionality before dealing with edge cases. I made conditionals for each way the user could enter invalid input for the amount and date of the transactions, one at a time. `deposit` and `withdraw` accounted for edge cases regarding the amount, because it is `Account`s responsibility to monitor the balance. `addTransaction` accounted for edge cases regarding the date, because `TransactionLog` keeps a record of all previous transactions so I felt it would be appropriate for this class to also check if a valid date has been given. Once I felt I had covered all bases, I went about refactoring these functions by using private methods for checking errors. These methods would then branch into further private methods to account for each type of error that could occur. This branching was made to make each function short and readable to the point where it is clear to see the responsibility of each one.
+
+I encountered an interesting bug when creating these private functions. I was testing my code in `node` by making multiple deposits and withdrawals with amounts with two decimal places and found that `this.balance` appeared to become a float with more than two decimal places. I researched this and found that this is due to the way Javascript estimates floats. This bug was solved by lines [23](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) and [35](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) which set `this.balance` back to a two decimal place float before creating the transaction.
+
+The only other refactoring of functions needed was in `formatLog` in `Statement` which would use a private method that would branch in a similar way as used before. Each branch would cover for each type of transaction.
