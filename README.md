@@ -1,41 +1,47 @@
 # Bank Tech Test
 
 This is a tech test for the Makers main course written in Javascript which simulates a bank account that has a balance, can deposit money, can withdraw money and print its statement. This program has been made while adhering to the following principles:
-  * [Object Oriented Programming](https://en.wikipedia.org/wiki/Object-oriented_programming) (OOP)
-  * [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) (TDD)
-  * [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle) (SRP)
-  * [Don't Repeat Yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (DRY) code
+
+- [Object Oriented Programming](https://en.wikipedia.org/wiki/Object-oriented_programming) (OOP)
+- [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) (TDD)
+- [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle) (SRP)
+- [Don't Repeat Yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (DRY) code
 
 Technologies used:
-  * [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
-  * [Jest](https://jestjs.io/) for unit testing.
-  * The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for linting.
+
+- [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
+- [Jest](https://jestjs.io/) for unit testing
+- The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting README.md
+- [ESLint](https://eslint.org/) for linting
 
 ## Approach
 
 I started off by creating a Miro board to map out my idea of how the program would work and what classes I would be creating. I initially created my user stories that I thought covered the functionality I wanted to implement. I then started with the `Account` class that contained a balance instance variable in the constructor called `this.balance` and five functions that would fulfill these user stories:
-  * `getBalance()`
-  * `displayBalance()`
-  * `deposit(amount, date)`
-  * `withdraw(amount, date)`
-  * `printStatement()`
 
-*Note: Although `getBalance` already deals with showing the balance of the account, I created `displayBalance` to print a more user-friendly message to the console.*
+- `getBalance()`
+- `displayBalance()`
+- `deposit(amount, date)`
+- `withdraw(amount, date)`
+- `printStatement()`
+
+_Note: Although `getBalance` already deals with showing the balance of the account, I created `displayBalance` to print a more user-friendly message to the console._
 
 I then started to think about how each function would work and what each would need in order to carry out their responsibility. `getBalance` and `displayBalance` were very straightforward since all they required was just `this.balance`. Initially, `deposit` and `withdraw` would simply increase and decrease the balance respectively; however, I quickly realised `printStatement` would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that `deposit` and `withdraw` would need to add the current transaction to this log once they update the balance.
 
 At this point I could see `Account` had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
-  * Monitoring the balance
-  * Keeping a history of all previous transactions
-  * Creating a statement from the transaction log
+
+- Monitoring the balance
+- Keeping a history of all previous transactions
+- Creating a statement from the transaction log
 
 It was clear two more classes were needed in order to adhere to the SRP: `TransactionLog` and `Statement`. I then followed the same process for these two classes as I had for the account class.
 
 Each transaction would need four keys:
-  * `type` - indicates which column in the statement to put the amount under
-  * `amount` - the change in the balance the transaction would make
-  * `date` - when the transaction was made
-  * `balance` - the updated balance once the transaction is completed
+
+- `type` - indicates which column in the statement to put the amount under
+- `amount` - the change in the balance the transaction would make
+- `date` - when the transaction was made
+- `balance` - the updated balance once the transaction is completed
 
 These would be made into a Javascript object by `TransactionLog` and then added into the history instance variable called `this.history` by a function called `addTransaction`. `Statement` would need to have one function called `formatLog` which would use the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement. `addTransaction` would use the `unshift` method to place the new transaction at the beginning of the array so that when iterating through `this.history`, the most recent transactions would be placed at the top of the statement.
 
@@ -110,14 +116,14 @@ account.withdraw(amount, date);
 
 `deposit` and `withdraw` increase and decrease the balance of the account respectively and call `addTransaction` from `TransactionLog` to add the transaction to `this.history`. These functions both have the following requirements for their arguments passed:
 
-* `amount`:
-  * must be a number
-  * cannot be less than or equal to 0
-  * cannot have more than two decimal places (since it is in units of pounds)
-  * cannot be greater than the balance (this only applies to withdraw)
-* `date`:
-  * must be in a valid format (DD/MM/YYYY)
-  * must be a valid date
+- `amount`:
+  - must be a number
+  - cannot be less than or equal to 0
+  - cannot have more than two decimal places (since it is in units of pounds)
+  - cannot be greater than the balance (this only applies to withdraw)
+- `date`:
+  - must be in a valid format (DD/MM/YYYY)
+  - must be a valid date
 
 If any of these conditions are not met, then the program will throw an appropriate error, giving the user some insight into what was wrong with their input.
 

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/jmcnally17/bank-tech-test#readme",
   "devDependencies": {
+    "eslint": "^8.17.0",
     "jest": "^28.1.1"
   }
 }
