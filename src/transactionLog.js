@@ -23,7 +23,7 @@ class TransactionLog {
 
 	#newBalanceCalculator(type, amount) {
 		if (this.history.length === 0) return amount;
-		else if (type === "deposit") return this.history[0].balance + amount;
+		if (type === "deposit") return this.history[0].balance + amount;
 		return this.history[0].balance - amount;
 	}
 }
