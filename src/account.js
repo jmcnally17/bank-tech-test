@@ -19,12 +19,14 @@ class Account {
 	deposit(amount, date = new Date()) {
 		this.#amountCheck(amount);
 		this.log.addTransaction("deposit", amount, date);
+		return `You have deposited £${amount.toFixed(2)}`;
 	}
 
 	withdraw(amount, date = new Date()) {
 		this.#amountCheck(amount);
 		this.#balanceCheck(amount);
 		this.log.addTransaction("withdrawal", amount, date);
+		return `You have withdrawan £${amount.toFixed(2)}`;
 	}
 
 	printStatement() {

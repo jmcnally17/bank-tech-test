@@ -16,6 +16,14 @@ describe(Account, () => {
 		mockDateTwo = new Date(2022, 4, 26);
 	});
 
+	it("has a transaction log", () => {
+		expect(account.log).toEqual(mockLog);
+	});
+
+	it("has a statement", () => {
+		expect(account.statement).toEqual(mockStatement);
+	});
+
 	it("starts with a balance of 0", () => {
 		mockLog.getHistory.mockImplementation(() => []);
 		expect(account.displayBalance()).toBe("Balance: £0.00");
@@ -31,18 +39,10 @@ describe(Account, () => {
 		expect(mockLog.getHistory).toHaveBeenCalledTimes(2);
 	});
 
-	it("has a transaction log", () => {
-		expect(account.log).toEqual(mockLog);
-	});
-
-	it("has a statement", () => {
-		expect(account.statement).toEqual(mockStatement);
-	});
-
 	describe("#deposit", () => {
 		it("sends through a deposit transaction", () => {
 			mockLog.addTransaction.mockImplementation(() => true);
-			account.deposit(1500, mockDateOne);
+			expect(account.deposit(1500, mockDateOne)).toBe("You have deposited £1500.00");
 			expect(mockLog.addTransaction).toHaveBeenCalledWith("deposit", 1500, mockDateOne);
 		});
 
@@ -82,7 +82,7 @@ describe(Account, () => {
 				{ type: "deposit", amount: 2000, date: mockDateOne, balance: 2000}
 			]);
 			mockLog.addTransaction.mockImplementation(() => true);
-			account.withdraw(700, mockDateTwo);
+			expect(account.withdraw(700, mockDateTwo)).toBe("You have withdrawan £700.00");
 			expect(mockLog.addTransaction).toHaveBeenCalledWith("withdrawal", 700, mockDateTwo);
 		});
 
