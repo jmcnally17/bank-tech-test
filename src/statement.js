@@ -19,7 +19,7 @@ class Statement {
 
 	#formatDeposit(transaction) {
 		const newLine =
-      `\n${transaction.date} || ` +
+      `\n${transaction.date.toLocaleDateString()} || ` +
       `${transaction.amount.toFixed(2)} || || ` +
       `${transaction.balance.toFixed(2)}`;
 		return newLine;
@@ -27,7 +27,7 @@ class Statement {
 
 	#formatWithdrawal(transaction) {
 		const newLine =
-      `\n${transaction.date} || || ` +
+      `\n${transaction.date.toLocaleDateString()} || || ` +
       `${transaction.amount.toFixed(2)} || ` +
       `${transaction.balance.toFixed(2)}`;
 		return newLine;
