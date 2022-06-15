@@ -3,13 +3,17 @@ const Statement = require("./statement");
 
 class Account {
 	constructor(log = new TransactionLog(), statement = new Statement()) {
-		this.balance = 0;
 		this.log = log;
 		this.statement = statement;
 	}
 
 	displayBalance() {
-		return `Balance: £${this.balance.toFixed(2)}`;
+		if (this.log.getHistory().length === 0) {
+			return "Balance: £0.00";
+		} else {
+			const balance = this.log.getHistory()[0].balance;
+			return `Balance: £${balance.toFixed(2)}`;
+		}
 	}
 
 	deposit(amount, date = new Date()) {
@@ -45,7 +49,10 @@ class Account {
 	}
 
 	#balanceCheck(amount) {
-		if (amount > this.balance) {
+		if (
+			this.log.getHistory().length === 0
+			|| amount > this.log.getHistory()[0].balance
+		) {
 			throw "Insufficient balance";
 		}
 	}
