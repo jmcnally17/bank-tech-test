@@ -74,7 +74,8 @@ account.withdraw(amount, date);
   - cannot be greater than the balance (this only applies to withdraw)
 - `date`:
   - must be in a valid format (DD/MM/YYYY)
-  - must be a valid date
+  - must be a valid date (e.g. "24/06/2022" is valid, "37/06/2022" is invalid)
+  - must be a string
 
 If any of these conditions are not met, then the program will throw an appropriate error, giving the user some insight into what was wrong with their input.
 
