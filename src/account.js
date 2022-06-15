@@ -6,32 +6,25 @@ class Account {
 		this.balance = 0;
 		this.log = log;
 		this.statement = statement;
-		console.log("Thank you for opening an account.");
-	}
-
-	getBalance() {
-		return this.balance;
 	}
 
 	displayBalance() {
 		return `Balance: £${this.balance.toFixed(2)}`;
 	}
 
-	deposit(amount, date) {
+	deposit(amount, date = new Date()) {
 		this.#amountCheck(amount);
 		this.balance += amount;
 		this.balance = parseFloat(this.balance.toFixed(2));
 		this.log.addTransaction("deposit", amount, date, this.balance);
-		this.#transactionMessage("deposited", amount);
 	}
 
-	withdraw(amount, date) {
+	withdraw(amount, date = new Date()) {
 		this.#amountCheck(amount);
 		this.#balanceCheck(amount);
 		this.balance -= amount;
 		this.balance = parseFloat(this.balance.toFixed(2));
 		this.log.addTransaction("withdrawal", amount, date, this.balance);
-		this.#transactionMessage("withdrawn", amount);
 	}
 
 	printStatement() {
@@ -54,13 +47,6 @@ class Account {
 		if (amount > this.balance) {
 			throw "Insufficient balance";
 		}
-	}
-
-	#transactionMessage(type, amount) {
-		console.log(
-			`You have ${type} £${amount.toFixed(2)}` +
-        `\nNew balance: £${this.balance.toFixed(2)}`
-		);
 	}
 }
 
