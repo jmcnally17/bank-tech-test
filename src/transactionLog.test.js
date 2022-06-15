@@ -13,13 +13,13 @@ describe(TransactionLog, () => {
 	describe("#addTransaction", () => {
 		it("adds an object representing a transaction into the log", () => {
 			const mockDate = new Date(2022, 5, 25);
-			log.addTransaction("deposit", 2000, mockDate, 3500);
+			log.addTransaction("deposit", 2000, mockDate);
 			expect(log.getHistory()).toEqual([
 				{
 					type: "deposit",
 					amount: 2000,
 					date: mockDate,
-					balance: 3500,
+					balance: 2000,
 				},
 			]);
 		});

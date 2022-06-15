@@ -1,7 +1,7 @@
 class Statement {
 	formatLog(log) {
 		let statement = "date || credit || debit || balance";
-		log.getHistory().forEach((transaction) => {
+		log.forEach((transaction) => {
 			statement += this.#formatTransaction(transaction);
 		});
 		return statement;

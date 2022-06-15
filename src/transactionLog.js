@@ -7,14 +7,27 @@ class TransactionLog {
 		return this.history;
 	}
 
-	addTransaction(type, amount, date, balance) {
+	addTransaction(type, amount, date) {
+		const newBalance = this.#newBalanceCalculator(type, amount);
 		const transaction = {
 			type: type,
 			amount: amount,
 			date: date,
-			balance: balance,
+			balance: newBalance,
 		};
 		this.history.unshift(transaction);
+	}
+
+	// private methods
+
+	#newBalanceCalculator(type, amount) {
+		if (this.history.length === 0) {
+			return amount;
+		} else if (type === "deposit") {
+			return this.history[0].balance + amount;
+		} else {
+			return this.history[0].balance - amount;
+		}
 	}
 }
 

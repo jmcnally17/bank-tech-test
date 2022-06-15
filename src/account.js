@@ -16,7 +16,7 @@ class Account {
 		this.#amountCheck(amount);
 		this.balance += amount;
 		this.balance = parseFloat(this.balance.toFixed(2));
-		this.log.addTransaction("deposit", amount, date, this.balance);
+		this.log.addTransaction("deposit", amount, date);
 	}
 
 	withdraw(amount, date = new Date()) {
@@ -24,11 +24,12 @@ class Account {
 		this.#balanceCheck(amount);
 		this.balance -= amount;
 		this.balance = parseFloat(this.balance.toFixed(2));
-		this.log.addTransaction("withdrawal", amount, date, this.balance);
+		this.log.addTransaction("withdrawal", amount, date);
 	}
 
 	printStatement() {
-		console.log(this.statement.formatLog(this.log));
+		const statementString = this.statement.formatLog(this.log.getHistory());
+		console.log(statementString);
 	}
 
 	// private methods
