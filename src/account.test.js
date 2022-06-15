@@ -15,7 +15,7 @@ describe(Account, () => {
 	});
 
 	it("starts with a balance of 0", () => {
-		expect(account.getBalance()).toBe(0);
+		expect(account.displayBalance()).toBe("Balance: £0.00");
 	});
 
 	it("has a transaction log", () => {
@@ -24,12 +24,6 @@ describe(Account, () => {
 
 	it("has a statement", () => {
 		expect(account.statement).toEqual(mockStatement);
-	});
-
-	it("can display the balance in the correct format", () => {
-		const logSpy = jest.spyOn(console, "log");
-		account.displayBalance();
-		expect(logSpy).toHaveBeenCalledWith("Balance: £0.00");
 	});
 
 	describe("#deposit", () => {
