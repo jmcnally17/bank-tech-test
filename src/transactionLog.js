@@ -8,6 +8,7 @@ class TransactionLog {
 	}
 
 	addTransaction(type, amount, date) {
+		if (!(date instanceof Date)) throw "Invalid date entered";
 		const newBalance = this.#newBalanceCalculator(type, amount);
 		const transaction = {
 			type: type,

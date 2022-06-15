@@ -18,16 +18,12 @@ class Account {
 
 	deposit(amount, date = new Date()) {
 		this.#amountCheck(amount);
-		this.balance += amount;
-		this.balance = parseFloat(this.balance.toFixed(2));
 		this.log.addTransaction("deposit", amount, date);
 	}
 
 	withdraw(amount, date = new Date()) {
 		this.#amountCheck(amount);
 		this.#balanceCheck(amount);
-		this.balance -= amount;
-		this.balance = parseFloat(this.balance.toFixed(2));
 		this.log.addTransaction("withdrawal", amount, date);
 	}
 

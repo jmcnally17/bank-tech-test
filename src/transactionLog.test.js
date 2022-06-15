@@ -23,5 +23,11 @@ describe(TransactionLog, () => {
 				},
 			]);
 		});
+
+		it("throws an error if an instance of Date is not given for the date argument", () => {
+			expect(() => {
+				log.addTransaction("deposit", 500, "25/05/2022");
+			}).toThrowError("Invalid date entered");
+		});
 	});
 });
