@@ -73,7 +73,7 @@ account.withdraw(amount, date);
   - cannot have more than two decimal places (since it is in units of pounds)
   - cannot be greater than the updated balance of the last transaction (this only applies to withdraw)
 - `date`:
-  - must be a valid date object (e.g. new Date(2022, 5, 26) is valid, new Date(2022, 5, 37) is invalid)
+  - must be a valid date object (e.g. `new Date(2022, 5, 26)` is valid, `new Date(2022, 5, 37)` is invalid)
 
 If any of these conditions are not met, then the program will throw an appropriate error, giving the user some insight into what was wrong with their input.
 
