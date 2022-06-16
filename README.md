@@ -11,8 +11,8 @@ Technologies used:
 
 - [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
 - [Jest](https://jestjs.io/) for unit testing
-- The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting README.md
 - [ESLint](https://eslint.org/) for linting
+- The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting README.md
 
 ## Getting Started
 
@@ -65,7 +65,7 @@ account.deposit(amount, date);
 account.withdraw(amount, date);
 ```
 
-`deposit` and `withdraw` increase and decrease the balance of the account respectively and call `addTransaction` from `TransactionLog` to add the transaction to `this.history`. `withdraw` cannot be run with an empty transaction log, because you cannot withdraw money from an empty account. The current balance is calculated from the transaction history itself. Therefore, no transaction history means there is no data to calculate a balance and thus £0.00 is given as the balance for this case. `date` has a default value which is a new Date object for the current time when `deposit` and `withdraw` are run. If you wish to input your own dates, however, the criteria for `date` is listed below along with the criteria for `amount`:
+`deposit()` and `withdraw()` increase and decrease the balance of the account respectively and call `addTransaction()` from `TransactionLog` to add the transaction to `this.history`. `withdraw()` cannot be run with an empty transaction log, because you cannot withdraw money from an empty account. The current balance is calculated from the transaction history itself. Therefore, no transaction history means there is no data to calculate a balance and thus £0.00 is given as the balance for this case. `date` has a default value which is a new Date object for the current time when `deposit()` and `withdraw()` are run. If you wish to input your own dates, however, the criteria for `date` is listed below along with the criteria for `amount`:
 
 - `amount`:
   - must be a number
@@ -127,9 +127,9 @@ I started off by creating a Miro board to map out my idea of how the program wou
 - `withdraw(amount, date)`
 - `printStatement()`
 
-_Note: Although `getBalance` already deals with showing the balance of the account, I created `displayBalance` to print a more user-friendly message to the console._
+_Note: Although `getBalance()` already dealt with showing the balance of the account, I created `displayBalance()` to print a more user-friendly message to the console._
 
-I then started to think about how each function would work and what each would need in order to carry out their responsibility. `getBalance` and `displayBalance` were very straightforward since all they required was just `this.balance`. Initially, `deposit` and `withdraw` would simply increase and decrease the balance respectively; however, I quickly realised `printStatement` would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that `deposit` and `withdraw` would need to add the current transaction to this log once they update the balance.
+I then started to think about how each function would work and what each would need in order to carry out their responsibility. `getBalance()` and `displayBalance()` were very straightforward since all they required was just `this.balance`. Initially, `deposit()` and `withdraw()` would simply increase and decrease the balance respectively; however, I quickly realised `printStatement()` would rely on all transactions being recorded in a log so that it could pull that data to format it into a statement. Therefore, it became clear that `deposit()` and `withdraw()` would need to add the current transaction to this log once they update the balance.
 
 At this point I could see `Account` had more than one responsibility. Therefore, I looked at what I had planned so far and saw there were three main responsibilities:
 
@@ -146,7 +146,7 @@ Each transaction would need four keys:
 - `date` - when the transaction was made
 - `balance` - the updated balance once the transaction is completed
 
-These would be made into a Javascript object by `TransactionLog` and then added into the history instance variable called `this.history` by a function called `addTransaction`. `Statement` would need to have one function called `formatLog` which would use the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement. `addTransaction` would use the `unshift` method to place the new transaction at the beginning of the array so that when iterating through `this.history`, the most recent transactions would be placed at the top of the statement.
+These would be made into a Javascript object by `TransactionLog` and then added into the history instance variable called `this.history` by a function called `addTransaction()`. `Statement` would need to have one function called `formatLog()` which would use the transaction log as an argument to obtain the array of transaction objects. It would then iterate through this array and format each transaction into a string that can be added to the statement. `addTransaction()` would use the `unshift()` method to place the new transaction at the beginning of the array so that when iterating through `this.history`, the most recent transactions would be placed at the top of the statement.
 
 I then had to plan how I would connect these classes together. I decided to use dependency injection to create an instance of `TransactionLog` and `Statement` in the constructor of `Account` because one account would have one corresponding transaction history and statement.
 
@@ -160,8 +160,10 @@ At this point, I thought I had sufficiently planned and began to write code, wit
 
 All the main functions that are intended to be called by the user were put in `Account`. The functions from the other classes are called in `Account` when needed. This made sense to me due to the fact the account is what the user would be interacting with.
 
-I focused on coding the main functionality before dealing with edge cases. I made conditionals for each way the user could enter invalid input for the amount and date of the transactions, one at a time. `deposit` and `withdraw` accounted for edge cases regarding the amount, because it is `Account`s responsibility to monitor the balance. `addTransaction` accounted for edge cases regarding the date, because `TransactionLog` keeps a record of all previous transactions so I felt it would be appropriate for this class to also check if a valid date has been given. Once I felt I had covered all bases, I went about refactoring these functions by using private methods for checking errors. These methods would then branch into further private methods to account for each type of error that could occur. This branching was made to make each function short and readable to the point where it is clear to see the responsibility of each one.
+I focused on coding the main functionality before dealing with edge cases. I made conditionals for each way the user could enter invalid input for the amount and date of the transactions, one at a time. `deposit()` and `withdraw()` accounted for edge cases regarding the amount, because it was `Account`s responsibility to monitor the balance. `addTransaction()` accounted for edge cases regarding the date, because `TransactionLog` keeps a record of all previous transactions so I felt it would be appropriate for this class to also check if a valid date has been given. Once I felt I had covered all bases, I went about refactoring these functions by using private methods for checking errors. These methods would then branch into further private methods to account for each type of error that could occur. This branching was made to make each function short and readable to the point where it is clear to see the responsibility of each one.
 
-I encountered an interesting bug when creating these private functions. I was testing my code in `node` by making multiple deposits and withdrawals with amounts with two decimal places and found that `this.balance` appeared to become a float with more than two decimal places. I researched this and found that this is due to the way Javascript estimates floats. This bug was solved by lines [23](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) and [35](https://github.com/jmcnally17/bank-tech-test/blob/main/src/account.js#L23) which set `this.balance` back to a two decimal place float before creating the transaction.
+I encountered an interesting bug when creating these private functions. I was testing my code in `node` by making multiple deposits and withdrawals with amounts with two decimal places and found that `this.balance` appeared to become a float with more than two decimal places. I researched this and found that this is due to the way Javascript estimates floats. This bug was solved by two lines of code in `deposit()` and `withdraw()` which set `this.balance` back to a two decimal place float before creating the transaction.
 
-The only other refactoring of functions needed was in `formatLog` in `Statement` which would use a private method that would branch in a similar way as used before. Each branch would cover for each type of transaction.
+The only other refactoring of functions needed was in `formatLog()` in `Statement` which would use a private method that would branch in a similar way as used before. Each branch would cover for each type of transaction.
+
+Later in the development process, I decided to make a few changes. Rather than storing the balance in a variable in `Account`, the balance of the account is now calculated by the transaction history. This made my `Account` class slightly shorter and also seemed to removed the bug I mentioned earlier with `this.balance` gaining more than two decimal places. At this point, I also removed `getBalance()` as it was no longer needed. The transaction log now also saves actual `Date` instances when making transactions which are then formatted in `Statement` using `toLocaleDateString()` in order to create the same formatting of the statament as before.
