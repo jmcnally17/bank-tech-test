@@ -65,17 +65,15 @@ account.deposit(amount, date);
 account.withdraw(amount, date);
 ```
 
-`deposit` and `withdraw` increase and decrease the balance of the account respectively and call `addTransaction` from `TransactionLog` to add the transaction to `this.history`. These functions both have the following requirements for their arguments passed:
+`deposit` and `withdraw` increase and decrease the balance of the account respectively and call `addTransaction` from `TransactionLog` to add the transaction to `this.history`. `withdraw` cannot be run with an empty transaction log, because you cannot withdraw money from an empty account. The current balance is calculated from the transaction history itself. Therefore, no transaction history means there is no data to calculate a balance and thus £0.00 is given as the balance for this case. `date` has a default value which is a new Date object for the current time when `deposit` and `withdraw` are run. If you wish to input your own dates, however, the criteria for `date` is listed below along with the criteria for `amount`:
 
 - `amount`:
   - must be a number
   - cannot be less than or equal to 0
   - cannot have more than two decimal places (since it is in units of pounds)
-  - cannot be greater than the balance (this only applies to withdraw)
+  - cannot be greater than the updated balance of the last transaction (this only applies to withdraw)
 - `date`:
-  - must be in a valid format (DD/MM/YYYY)
-  - must be a valid date (e.g. "24/06/2022" is valid, "37/06/2022" is invalid)
-  - must be a string
+  - must be a valid date object (e.g. new Date(2022, 5, 26) is valid, new Date(2022, 5, 37) is invalid)
 
 If any of these conditions are not met, then the program will throw an appropriate error, giving the user some insight into what was wrong with their input.
 
@@ -103,7 +101,7 @@ date || credit || debit || balance
 
 Transactions with a non-zero amount of money in the credit column are deposits while transactions with a non zero amount of money in the debit column are withdrawals. The balance displayed is the balance of the account once the transaction has been completed.
 
-The user is able to enter dates they want in any order. This could therefore create confusion in the statement with transactions being unordered. In the real world, the program would simply record the current date when a transaction is made (could be done by simply using `new Date()`). However, this program has been designed with the intent for the user to use this on a short timescale. Therefore, forcing the user to use the current date would mean they could only record transactions one day at a time which would be a major inconvenience for testing this program.
+Since the user is able to enter dates they want in any order, this could create confusion in the statement with transactions being unordered. However, the freedom to input a specific date for testing is needed which opens this option up for the user. To prevent this in the real world, a user interface would be made to stop the user from being able to input the date they wanted to and would instead always use the default value of `new Date()` to get the current date. Also, this program has been designed for users to experiment with multiple different dates in a short timescale, as oppose to entering transactions and having to wait a full day to input a new one with a different date.
 
 ### Example Output
 
