@@ -101,7 +101,7 @@ date || credit || debit || balance
 
 Transactions with a non-zero amount of money in the credit column are deposits while transactions with a non zero amount of money in the debit column are withdrawals. The balance displayed is the balance of the account once the transaction has been completed.
 
-Since the user is able to enter dates they want in any order, this could create confusion in the statement with transactions being unordered. However, the freedom to input a specific date for testing is needed which opens this option up for the user. To prevent this in the real world, a user interface would be made to stop the user from being able to input the date they wanted to and would instead always use the default value of `new Date()` to get the current date. Also, this program has been designed for users to experiment with multiple different dates in a short timescale, as oppose to entering transactions and having to wait a full day to input a new one with a different date.
+Since the user is able to enter dates they want in any order, this could create confusion in the statement with transactions being unordered. However this program has been designed for users to experiment with multiple different dates in a short timescale, as oppose to entering transactions and having to wait a full day to input a new one with a different date. To prevent this in the real world, either a user interface would be made or the date argument in `deposit()` and `withdraw()` would be removed in order to stop the user from being able to input the date they wanted to and would instead always use the default value of `new Date()` to get the current date.
 
 ### Example Output
 
