@@ -12,7 +12,7 @@ Technologies used:
 - [Miro](https://miro.com/) for planning. Board can be found [here](https://miro.com/app/board/uXjVOzM9MG8=/?share_link_id=305314712727)
 - [Jest](https://jestjs.io/) for unit testing
 - [ESLint](https://eslint.org/) for linting
-- The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting README.md
+- The VS Code extension [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting [README.md](https://github.com/jmcnally17/bank-tech-test/blob/main/README.md)
 
 ## Getting Started
 
