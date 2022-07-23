@@ -9,6 +9,7 @@ jest.mock("./statement");
 describe(Account, () => {
   beforeEach(() => {
     TransactionLog.mockClear();
+    Statement.mockClear();
     mockLog = new TransactionLog();
     mockStatement = new Statement();
     account = new Account(mockLog, mockStatement);
